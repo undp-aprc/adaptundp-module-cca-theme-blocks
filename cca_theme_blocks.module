@@ -301,6 +301,11 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
           'template' => 'cca-how-we-engage',
           'render element' => 'elements'
         ),
+        'cca_featured_projects' => array(
+            'path' => $path.'/templates/',
+            'template' => 'cca-featured-projects',
+            'render element' => 'elements'
+        ),
         'cca_video_slide' => array(
           'path' => $path.'/templates/',
           'template' => 'cca-video-slide',
