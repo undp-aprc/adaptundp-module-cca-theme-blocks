@@ -1,6 +1,12 @@
 <?php $theme_path = $variables['elements']['variables']['theme_path']; ?>
 <ul class="resource-menu-list inline-menu">
         <div class="col-sm-2">
+            <a href="/resources/featured">
+                <img class="hidden-xs" src="/<?php print $theme_path; ?>/img/ux-icons/icon-resource-featured.svg" />
+                <h5>Featured Resources</h5>
+            </a>
+        </div>
+        <div class="col-sm-2">
             <a href="/resource-finder">
                 <img class="hidden-xs" src="/<?php print $theme_path; ?>/img/ux-icons/icon-resource-find.svg" />
                 <h5>Find Resources</h5>
