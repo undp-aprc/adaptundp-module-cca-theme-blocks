@@ -5,7 +5,7 @@
             <a href="/taxonomy/term/<?php print $path_alias ?>">
                 <span class="hidden-xs"><?php print(render($item['img'])); ?></span>
                 <h5><?php print $item['title']; ?></h5>
-            </a>cd
+            </a>
         </div>
     <?php endforeach; ?>
 </ul>
