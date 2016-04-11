@@ -36,6 +36,28 @@
 					}
 				}
 			});
+
+            $('.page-nap-gsp-home .slidesjs').slidesjs({
+                start: 1,
+                navigation: {
+                    active: false
+                },
+                pagination: {
+                    active: false
+                },
+                play: {
+                    active: false,
+                    effect: "fade",
+                    interval: 5000,
+                    auto: true
+                },
+                callback: {
+                    loaded: function(number) {
+                        $('#block-cca-theme-blocks-nap-slides .slidesjs').css('visibility','visible');
+                        $('#block-cca-theme-blocks-nap-slides .slidesjs').css('height','auto');
+                    }
+                }
+            });
 		}	
 	}
 })(jQuery);

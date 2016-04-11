@@ -52,6 +52,16 @@ function cca_theme_blocks_block_info() {
         'cache' => DRUPAL_CACHE_GLOBAL,
         'visibility' => BLOCK_VISIBILITY_LISTED
     );
+    $items['nap_slides'] = array(
+        'info' => t('NAP-GSP Homepage Slider'),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'visibility' => BLOCK_VISIBILITY_LISTED
+    );
+    $items['nap_footer_gsp'] = array(
+        'info' => t('NAP Footer for GSP'),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'visibility' => BLOCK_VISIBILITY_LISTED
+    );
     return $items;
 }
 
@@ -223,7 +233,34 @@ function cca_theme_blocks_block_view($delta) {
                     ),
                 ),
             );
+        break;
+        case 'nap_slides':
+            $block['content'] = array(
+                'subject' => t('NAP Slides'),
+                '#theme' => 'nap_slides',
+                '#theme_wrappers' => array(
+                    'cca_slideshow_container',
+                ),
+                '#dom_variables' => array(
+
+                ),
+                '#attached' => array(
+                    'js' => array(
+                        $module_path.'/js/plugins/jquery.slides.min.js' => array(
+                            'type' => 'file',
+                        ),
+                        $module_path.'/js/attach.js' => array(
+                            'type' => 'file',
+                        ),
+                    ),
+                ),
+            );
             break;
+            case 'nap_footer_gsp':
+                $block['content'] = array(
+                    'subject' => t('NAP GSP Footer'),
+                    '#theme' => 'nap_footer_gsp'
+                );
     }
     return $block;
 }
@@ -316,6 +353,16 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
             'template' => 'date-dynamic-icon',
             'render element' => 'elements'
         ),
+        'nap_slides' => array(
+            'path' => $path.'/templates/',
+            'template' => 'nap-slides',
+            'render element' => 'elements'
+        ),
+        'nap_footer_gsp' => array(
+            'path' => $path.'/templates/',
+            'template' => 'nap-footer-gsp',
+            'render element' => 'elements'
+        )
   );
 }
 
@@ -402,6 +449,17 @@ function cca_theme_blocks_preprocess_cca_video_slide(&$variables)
     foreach ($items as $item) {
             $node = node_load($item['target_id']);
             $nodes[] = node_view($node, 'video_preview_no_titles');
+    }
+    $variables['nodes'] = $nodes;
+}
+
+function cca_theme_blocks_preprocess_nap_slides(&$variables) {
+    $nodes = array();
+    $items = entityqueue_subqueue_load('nap_gsp_page_slider')->eq_node['und'];
+
+    foreach ($items as $item) {
+        $node = node_load($item['target_id']);
+        $nodes[] = node_view($node, 'full_screen_slide');
     }
     $variables['nodes'] = $nodes;
 }
