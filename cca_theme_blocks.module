@@ -64,7 +64,8 @@ function cca_theme_blocks_block_info() {
     );
     $items['impact_story_headline_data'] = array(
         'info' => t('Headline data block for global impact stories'),
-        'cache' => DRUPAL_CACHE_GLOBAL
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'visibility' => BLOCK_VISIBILITY_NOTLISTED
     );
     return $items;
 }
