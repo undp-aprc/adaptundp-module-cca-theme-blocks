@@ -67,6 +67,11 @@ function cca_theme_blocks_block_info() {
         'cache' => DRUPAL_CACHE_GLOBAL,
         'visibility' => BLOCK_VISIBILITY_NOTLISTED
     );
+    $items['impact_story_map_select_icons'] = array(
+        'info' => t('Impact story map select icons'),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'visibility' => BLOCK_VISIBILITY_NOTLISTED
+    );
     return $items;
 }
 
@@ -273,6 +278,12 @@ function cca_theme_blocks_block_view($delta) {
                     '#theme' => 'impact_story_headline_data',
                 );
             break;
+        case 'impact_story_map_select_icons':
+                $block['content'] = array(
+                    'subject' => t('Impact Story Block Select Icons'),
+                    '#theme' => 'impact_story_select_icons'
+                );
+            break;
     }
     return $block;
 }
@@ -379,6 +390,11 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
             'path' => $path.'/templates/',
             'template' => 'impact-story-headline-data',
             'render element' => 'elements'
+        ),
+        'impact_story_select_icons' => array(
+            'path' => $path.'/templates/',
+            'template' => 'impact-story-select-icons',
+            'render element' => 'elements'
         )
   );
 }
@@ -442,6 +458,32 @@ function cca_theme_blocks_preprocess_impact_story_headline_data(&$variables) {
         drupal_add_js(drupal_get_path('module', 'cca_theme_blocks').'/js/attachCountUp.js');
         $variables['elements']['#items'] = $items;
     }
+}
+
+function cca_theme_blocks_preprocess_impact_story_select_icons(&$variables) {
+    $vocabs = taxonomy_vocabulary_get_names();
+    $vid = 0;
+    $items = [];
+
+    foreach($vocabs as $item) {
+        if ($item->machine_name == 'impact_story_themes') {
+            $vid = $item->vid;
+        }
+    }
+    $terms = taxonomy_get_tree($vid, 0, NULL, true);
+
+    foreach($terms as $key=>$item) {
+        $items[$key] = array(
+            'id' => $item->tid,
+            'image' => file_create_url($item->field_thumbnail['und'][0]['uri']),
+            'title' => $item->name
+        );
+    }
+
+    $variables['elements']['#items'] = $items;
+
+    drupal_add_js(array('cca_theme_blocks_map_layers' => array('values' => $items)), array('type' => 'setting'));
+    drupal_add_js(drupal_get_path('module', 'cca_theme_blocks').'/js/attachMapLayers.js');
 }
 
 /**
