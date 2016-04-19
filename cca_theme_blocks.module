@@ -266,11 +266,13 @@ function cca_theme_blocks_block_view($delta) {
                     'subject' => t('NAP GSP Footer'),
                     '#theme' => 'nap_footer_gsp'
                 );
+            break;
             case 'impact_story_headline_data':
                 $block['content'] = array(
                     'subject' => t('Impact Story Headline Data'),
                     '#theme' => 'impact_story_headline_data',
                 );
+            break;
     }
     return $block;
 }
