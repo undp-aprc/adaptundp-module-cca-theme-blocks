@@ -62,6 +62,10 @@ function cca_theme_blocks_block_info() {
         'cache' => DRUPAL_CACHE_GLOBAL,
         'visibility' => BLOCK_VISIBILITY_LISTED
     );
+    $items['impact_story_headline_data'] = array(
+        'info' => t('Headline data block for global impact stories'),
+        'cache' => DRUPAL_CACHE_GLOBAL
+    );
     return $items;
 }
 
@@ -261,6 +265,11 @@ function cca_theme_blocks_block_view($delta) {
                     'subject' => t('NAP GSP Footer'),
                     '#theme' => 'nap_footer_gsp'
                 );
+            case 'impact_story_headline_data':
+                $block['content'] = array(
+                    'subject' => t('Impact Story Headline Data'),
+                    '#theme' => 'impact_story_headline_data',
+                );
     }
     return $block;
 }
@@ -362,6 +371,11 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
             'path' => $path.'/templates/',
             'template' => 'nap-footer-gsp',
             'render element' => 'elements'
+        ),
+        'impact_story_headline_data' => array(
+            'path' => $path.'/templates/',
+            'template' => 'impact-story-headline-data',
+            'render element' => 'elements'
         )
   );
 }
@@ -402,6 +416,29 @@ function cca_theme_blocks_preprocess_cca_secondary_menu(&$variables) {
     $items[] = $variables['elements']['search'];
     unset($variables['elements']['search']);
     $variables['elements']['items'] = $items;
+}
+
+function cca_theme_blocks_preprocess_impact_story_headline_data(&$variables) {
+    $node = menu_get_object();
+    $arg = arg(2);
+    if (isset($node) && empty($arg)) {
+
+        $items = Array();
+        $fci_array = $node->field_quantitative_impacts['und'];
+        foreach($fci_array as $key=>$item) {
+            $fci = entity_load('field_collection_item', array($item['value']));
+
+            $items[] = array(
+                'value' => $fci[$item['value']]->field_impact_value['und'][0]['value'],
+                'description' => $fci[$item['value']]->field_impact_description['und'][0]['safe_value']
+            );
+        }
+
+        drupal_add_js(array('cca_theme_blocks_countup' => array('values' => $items)), array('type' => 'setting'));
+        drupal_add_js(drupal_get_path('module', 'cca_theme_blocks').'/js/vendor/countUp.js/countUp.js');
+        drupal_add_js(drupal_get_path('module', 'cca_theme_blocks').'/js/attachCountUp.js');
+        $variables['elements']['#items'] = $items;
+    }
 }
 
 /**

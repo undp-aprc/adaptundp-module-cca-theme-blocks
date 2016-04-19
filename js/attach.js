@@ -49,7 +49,7 @@
                     active: false,
                     effect: "fade",
                     interval: 5000,
-                    auto: true
+                    auto: false
                 },
                 callback: {
                     loaded: function(number) {
