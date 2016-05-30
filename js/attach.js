@@ -38,6 +38,7 @@
 			});
 
             $('.page-nap-gsp-home .slidesjs').slidesjs({
+				height:100,
                 start: 1,
                 navigation: {
                     active: false
@@ -49,7 +50,7 @@
                     active: false,
                     effect: "fade",
                     interval: 5000,
-                    auto: true
+                    auto: false
                 },
                 callback: {
                     loaded: function(number) {

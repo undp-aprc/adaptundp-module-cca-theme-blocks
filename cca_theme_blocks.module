@@ -72,6 +72,11 @@ function cca_theme_blocks_block_info() {
         'cache' => DRUPAL_CACHE_GLOBAL,
         'visibility' => BLOCK_VISIBILITY_NOTLISTED
     );
+    $items['nap_page_banner_block'] = array(
+        'info' => t('NAP Page Banner Block'),
+        'cache' => DRUPAL_GLOBAL_CACHE,
+        'visibility' => BLOCK_VISIBILITY_NOTLISTED
+    );
     return $items;
 }
 
@@ -284,6 +289,12 @@ function cca_theme_blocks_block_view($delta) {
                     '#theme' => 'impact_story_select_icons'
                 );
             break;
+        case 'nap_page_banner_block':
+            $block['content'] = array(
+                'subject' => t('NAP GSP Page Banner Block'),
+                '#theme' => 'nap_page_banner_block'
+            );
+            break;
     }
     return $block;
 }
@@ -394,6 +405,11 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
         'impact_story_select_icons' => array(
             'path' => $path.'/templates/',
             'template' => 'impact-story-select-icons',
+            'render element' => 'elements'
+        ),
+        'nap_page_banner_block' => array(
+            'path' => $path.'/templates/',
+            'template' => 'nap-page-banner',
             'render element' => 'elements'
         )
   );
