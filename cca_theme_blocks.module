@@ -411,6 +411,10 @@ function cca_theme_blocks_theme($existing, $type, $theme, $path) {
             'path' => $path.'/templates/',
             'template' => 'nap-page-banner',
             'render element' => 'elements'
+        ),
+        'cca_project_overview' => array(
+            'path' => $path.'/templates',
+            'template' => 'cca-project-overview',
         )
   );
 }
@@ -491,7 +495,7 @@ function cca_theme_blocks_preprocess_impact_story_select_icons(&$variables) {
     foreach($terms as $key=>$item) {
         $items[$key] = array(
             'id' => $item->tid,
-            'image' => file_create_url($item->field_thumbnail['und'][0]['uri']),
+            'image' => image_style_url('1-1_medium_scaled_cropped_400x400', $item->field_thumbnail['und'][0]['uri']),
             'title' => $item->name
         );
     }
