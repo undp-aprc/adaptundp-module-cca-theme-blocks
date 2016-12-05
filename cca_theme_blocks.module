@@ -538,5 +538,3 @@ function fetch_img($fid, $style_name, $theme = 'image_style') {
         drupal_set_message('Valid fid not passed', 'error');
     }
 }
-
-?>
